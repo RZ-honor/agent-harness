@@ -1,0 +1,64 @@
+{
+  "memory": {
+    "naive": 80,
+    "with_memory": 25,
+    "saved": 55,
+    "rate": 0.6875
+  },
+  "verifier": {
+    "n": 20,
+    "passed_real": 20,
+    "blocked_fake": 20,
+    "accuracy": 1.0,
+    "errors": []
+  },
+  "action_guard": {
+    "n": 6,
+    "correct": 6,
+    "rows": [
+      {
+        "probe": "query_logs",
+        "want": true,
+        "got": true,
+        "ok": true
+      },
+      {
+        "probe": "query_logs",
+        "want": false,
+        "got": false,
+        "ok": true
+      },
+      {
+        "probe": "run_diagnostic",
+        "want": true,
+        "got": true,
+        "ok": true
+      },
+      {
+        "probe": "run_diagnostic",
+        "want": false,
+        "got": false,
+        "ok": true
+      },
+      {
+        "probe": "drop_database",
+        "want": false,
+        "got": false,
+        "ok": true
+      },
+      {
+        "probe": "query_topology",
+        "want": true,
+        "got": true,
+        "ok": true
+      }
+    ]
+  },
+  "latency": {
+    "n": 20,
+    "mean": 0.6807149991800543,
+    "p50": 0.8999999990919605,
+    "p95": 1.684600007138215,
+    "max": 2.016200000070967
+  }
+}

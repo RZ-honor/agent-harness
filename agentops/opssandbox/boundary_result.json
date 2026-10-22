@@ -1,0 +1,102 @@
+{
+  "100%(不压缩)": {
+    "ok": 20,
+    "evidence_lost": 0,
+    "root_misjudged": 0,
+    "both_lost": 0,
+    "tokens": 6521.55,
+    "steps": 4.55,
+    "failed_cases": []
+  },
+  "50%": {
+    "ok": 19,
+    "evidence_lost": 1,
+    "root_misjudged": 0,
+    "both_lost": 0,
+    "tokens": 4200.7,
+    "steps": 4.55,
+    "failed_cases": [
+      "ops10"
+    ]
+  },
+  "20%": {
+    "ok": 19,
+    "evidence_lost": 1,
+    "root_misjudged": 0,
+    "both_lost": 0,
+    "tokens": 2402.8,
+    "steps": 4.55,
+    "failed_cases": [
+      "ops10"
+    ]
+  },
+  "10%": {
+    "ok": 18,
+    "evidence_lost": 2,
+    "root_misjudged": 0,
+    "both_lost": 0,
+    "tokens": 1537.3,
+    "steps": 4.55,
+    "failed_cases": [
+      "ops10",
+      "ops19"
+    ]
+  },
+  "5%": {
+    "ok": 11,
+    "evidence_lost": 5,
+    "root_misjudged": 0,
+    "both_lost": 4,
+    "tokens": 906.05,
+    "steps": 4.55,
+    "failed_cases": [
+      "ops04",
+      "ops07",
+      "ops08",
+      "ops09",
+      "ops10",
+      "ops15",
+      "ops16",
+      "ops19",
+      "ops20"
+    ]
+  },
+  "2%": {
+    "ok": 11,
+    "evidence_lost": 5,
+    "root_misjudged": 0,
+    "both_lost": 4,
+    "tokens": 518.6,
+    "steps": 4.55,
+    "failed_cases": [
+      "ops04",
+      "ops07",
+      "ops08",
+      "ops09",
+      "ops10",
+      "ops15",
+      "ops16",
+      "ops19",
+      "ops20"
+    ]
+  },
+  "1%": {
+    "ok": 11,
+    "evidence_lost": 5,
+    "root_misjudged": 0,
+    "both_lost": 4,
+    "tokens": 421.5,
+    "steps": 4.55,
+    "failed_cases": [
+      "ops04",
+      "ops07",
+      "ops08",
+      "ops09",
+      "ops10",
+      "ops15",
+      "ops16",
+      "ops19",
+      "ops20"
+    ]
+  }
+}

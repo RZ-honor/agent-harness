@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-harness"
+version = "1.0.0"
+description = "Agent runtime harness: execution guardrails and context budget, fully deterministic and offline"
+requires-python = ">=3.10"
+
+[tool.setuptools]
+packages = ["miniagent", "agentops", "agentops.opssandbox"]
+
+[tool.pytest.ini_options]
+testpaths = ["miniagent/tests", "agentops/tests", "agentops/opssandbox"]

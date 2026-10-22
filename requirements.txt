@@ -1,0 +1,2 @@
+# 运行与测试仅需 Python 标准库 + pytest
+pytest>=8.0
