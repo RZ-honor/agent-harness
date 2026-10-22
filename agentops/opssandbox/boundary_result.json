@@ -4,7 +4,7 @@
     "evidence_lost": 0,
     "root_misjudged": 0,
     "both_lost": 0,
-    "tokens": 6521.55,
+    "tokens": 6521.4,
     "steps": 4.55,
     "failed_cases": []
   },
@@ -13,7 +13,7 @@
     "evidence_lost": 1,
     "root_misjudged": 0,
     "both_lost": 0,
-    "tokens": 4200.7,
+    "tokens": 4200.55,
     "steps": 4.55,
     "failed_cases": [
       "ops10"
@@ -24,7 +24,7 @@
     "evidence_lost": 1,
     "root_misjudged": 0,
     "both_lost": 0,
-    "tokens": 2402.8,
+    "tokens": 2402.05,
     "steps": 4.55,
     "failed_cases": [
       "ops10"
@@ -35,7 +35,7 @@
     "evidence_lost": 2,
     "root_misjudged": 0,
     "both_lost": 0,
-    "tokens": 1537.3,
+    "tokens": 1537.35,
     "steps": 4.55,
     "failed_cases": [
       "ops10",
@@ -47,7 +47,7 @@
     "evidence_lost": 5,
     "root_misjudged": 0,
     "both_lost": 4,
-    "tokens": 906.05,
+    "tokens": 906.0,
     "steps": 4.55,
     "failed_cases": [
       "ops04",

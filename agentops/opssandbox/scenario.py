@@ -21,6 +21,7 @@ Benchmark 的口径）：
 from __future__ import annotations
 
 import random
+import zlib
 from dataclasses import dataclass, field
 
 
@@ -319,7 +320,7 @@ def logs_of(case: Case, service: str) -> str:
     if key in _CACHE:
         return _CACHE[key]
 
-    noise = _noise_block(service, seed=hash(case.cid) & 0xFFFF)
+    noise = _noise_block(service, seed=zlib.crc32(case.cid.encode()) & 0xFFFF)
     if service == case.root_entity:
         block = list(case.anomaly)
         pos = len(noise) // 2
@@ -342,7 +343,7 @@ def logs_of(case: Case, service: str) -> str:
 def metrics_of(case: Case, service: str) -> str:
     """时间序列指标。60 个采样点，异常出现在后半段。"""
     metric = METRIC_OF.get(case.fault_type, 'latency')
-    rng = random.Random((hash(case.cid) ^ hash(service)) & 0xFFFF)
+    rng = random.Random((zlib.crc32(case.cid.encode()) ^ zlib.crc32(service.encode())) & 0xFFFF)
     base = {'cpu_usage': 22.0, 'heap_used': 1.1, 'disk_available': 480.0,
             'rtt': 12.0, 'dns_resolve_ms': 8.0, 'pool_active': 12.0,
             'query_time': 0.02, 'cache_hit_rate': 96.0, 'consumer_lag': 12.0,

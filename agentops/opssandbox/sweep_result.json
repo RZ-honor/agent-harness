@@ -1,292 +1,142 @@
-{
-  "0": {
-    "100%(不压缩)": {
-      "success": 1.0,
-      "root": 1.0,
-      "evidence": 1.0,
-      "tokens": 8120.8,
-      "n_lines": 280,
-      "offset": 6
-    },
-    "50%": {
-      "success": 0.95,
-      "root": 1.0,
-      "evidence": 0.95,
-      "tokens": 4970.6,
-      "n_lines": 280,
-      "offset": 6
-    },
-    "20%": {
-      "success": 0.95,
-      "root": 1.0,
-      "evidence": 0.95,
-      "tokens": 2438.0,
-      "n_lines": 280,
-      "offset": 6
-    },
-    "10%": {
-      "success": 0.9,
-      "root": 1.0,
-      "evidence": 0.9,
-      "tokens": 1537.35,
-      "n_lines": 280,
-      "offset": 6
-    },
-    "5%": {
-      "success": 0.55,
-      "root": 0.8,
-      "evidence": 0.55,
-      "tokens": 907.85,
-      "n_lines": 280,
-      "offset": 6
-    },
-    "2%": {
-      "success": 0.55,
-      "root": 0.8,
-      "evidence": 0.55,
-      "tokens": 518.75,
-      "n_lines": 280,
-      "offset": 6
-    },
-    "1%": {
-      "success": 0.55,
-      "root": 0.8,
-      "evidence": 0.55,
-      "tokens": 421.5,
-      "n_lines": 280,
-      "offset": 6
+[
+  {
+    "level": "100%(不压缩)",
+    "keep_chars": null,
+    "n": 20,
+    "solved": 20,
+    "success_rate": 1.0,
+    "root_hit": 20,
+    "evidence_hit": 20,
+    "avg_tokens": 6521.4,
+    "avg_steps": 4.55,
+    "obs_raw": 499381,
+    "obs_kept": 499381,
+    "obs_ratio": 1.0,
+    "guard": {
+      "guard_blocks": 0,
+      "confirm_blocks": 0,
+      "breaker_fastfail": 0,
+      "executed": 71
     }
   },
-  "1": {
-    "100%(不压缩)": {
-      "success": 1.0,
-      "root": 1.0,
-      "evidence": 1.0,
-      "tokens": 5989.15,
-      "n_lines": 200,
-      "offset": 1
-    },
-    "50%": {
-      "success": 0.95,
-      "root": 1.0,
-      "evidence": 0.95,
-      "tokens": 3901.1,
-      "n_lines": 200,
-      "offset": 1
-    },
-    "20%": {
-      "success": 0.95,
-      "root": 1.0,
-      "evidence": 0.95,
-      "tokens": 2385.4,
-      "n_lines": 200,
-      "offset": 1
-    },
-    "10%": {
-      "success": 0.95,
-      "root": 1.0,
-      "evidence": 0.95,
-      "tokens": 1537.45,
-      "n_lines": 200,
-      "offset": 1
-    },
-    "5%": {
-      "success": 0.7,
-      "root": 0.9,
-      "evidence": 0.7,
-      "tokens": 906.15,
-      "n_lines": 200,
-      "offset": 1
-    },
-    "2%": {
-      "success": 0.55,
-      "root": 0.8,
-      "evidence": 0.55,
-      "tokens": 518.55,
-      "n_lines": 200,
-      "offset": 1
-    },
-    "1%": {
-      "success": 0.55,
-      "root": 0.8,
-      "evidence": 0.55,
-      "tokens": 421.45,
-      "n_lines": 200,
-      "offset": 1
+  {
+    "level": "50%",
+    "keep_chars": 10000,
+    "n": 20,
+    "solved": 19,
+    "success_rate": 0.95,
+    "root_hit": 20,
+    "evidence_hit": 19,
+    "avg_tokens": 4200.55,
+    "avg_steps": 4.55,
+    "obs_raw": 499381,
+    "obs_kept": 304317,
+    "obs_ratio": 0.6093884228675099,
+    "guard": {
+      "guard_blocks": 0,
+      "confirm_blocks": 0,
+      "breaker_fastfail": 0,
+      "executed": 71
     }
   },
-  "2": {
-    "100%(不压缩)": {
-      "success": 1.0,
-      "root": 1.0,
-      "evidence": 1.0,
-      "tokens": 4923.25,
-      "n_lines": 160,
-      "offset": 1
-    },
-    "50%": {
-      "success": 0.95,
-      "root": 1.0,
-      "evidence": 0.95,
-      "tokens": 3248.5,
-      "n_lines": 160,
-      "offset": 1
-    },
-    "20%": {
-      "success": 0.95,
-      "root": 1.0,
-      "evidence": 0.95,
-      "tokens": 2349.15,
-      "n_lines": 160,
-      "offset": 1
-    },
-    "10%": {
-      "success": 0.95,
-      "root": 1.0,
-      "evidence": 0.95,
-      "tokens": 1507.95,
-      "n_lines": 160,
-      "offset": 1
-    },
-    "5%": {
-      "success": 0.9,
-      "root": 1.0,
-      "evidence": 0.9,
-      "tokens": 903.1,
-      "n_lines": 160,
-      "offset": 1
-    },
-    "2%": {
-      "success": 0.55,
-      "root": 0.8,
-      "evidence": 0.55,
-      "tokens": 518.4,
-      "n_lines": 160,
-      "offset": 1
-    },
-    "1%": {
-      "success": 0.55,
-      "root": 0.8,
-      "evidence": 0.55,
-      "tokens": 421.1,
-      "n_lines": 160,
-      "offset": 1
+  {
+    "level": "20%",
+    "keep_chars": 4000,
+    "n": 20,
+    "solved": 19,
+    "success_rate": 0.95,
+    "root_hit": 20,
+    "evidence_hit": 19,
+    "avg_tokens": 2402.05,
+    "avg_steps": 4.55,
+    "obs_raw": 499381,
+    "obs_kept": 163710,
+    "obs_ratio": 0.3278258484003196,
+    "guard": {
+      "guard_blocks": 0,
+      "confirm_blocks": 0,
+      "breaker_fastfail": 0,
+      "executed": 71
     }
   },
-  "3": {
-    "100%(不压缩)": {
-      "success": 1.0,
-      "root": 1.0,
-      "evidence": 1.0,
-      "tokens": 5989.4,
-      "n_lines": 200,
-      "offset": 2
-    },
-    "50%": {
-      "success": 0.95,
-      "root": 1.0,
-      "evidence": 0.95,
-      "tokens": 3893.35,
-      "n_lines": 200,
-      "offset": 2
-    },
-    "20%": {
-      "success": 0.95,
-      "root": 1.0,
-      "evidence": 0.95,
-      "tokens": 2377.25,
-      "n_lines": 200,
-      "offset": 2
-    },
-    "10%": {
-      "success": 0.95,
-      "root": 1.0,
-      "evidence": 0.95,
-      "tokens": 1535.4,
-      "n_lines": 200,
-      "offset": 2
-    },
-    "5%": {
-      "success": 0.55,
-      "root": 0.8,
-      "evidence": 0.55,
-      "tokens": 905.85,
-      "n_lines": 200,
-      "offset": 2
-    },
-    "2%": {
-      "success": 0.55,
-      "root": 0.8,
-      "evidence": 0.55,
-      "tokens": 518.55,
-      "n_lines": 200,
-      "offset": 2
-    },
-    "1%": {
-      "success": 0.55,
-      "root": 0.8,
-      "evidence": 0.55,
-      "tokens": 421.45,
-      "n_lines": 200,
-      "offset": 2
+  {
+    "level": "10%",
+    "keep_chars": 2000,
+    "n": 20,
+    "solved": 18,
+    "success_rate": 0.9,
+    "root_hit": 20,
+    "evidence_hit": 18,
+    "avg_tokens": 1537.35,
+    "avg_steps": 4.55,
+    "obs_raw": 499381,
+    "obs_kept": 96350,
+    "obs_ratio": 0.19293885830658355,
+    "guard": {
+      "guard_blocks": 0,
+      "confirm_blocks": 0,
+      "breaker_fastfail": 0,
+      "executed": 71
     }
   },
-  "4": {
-    "100%(不压缩)": {
-      "success": 1.0,
-      "root": 1.0,
-      "evidence": 1.0,
-      "tokens": 5989.35,
-      "n_lines": 200,
-      "offset": 4
-    },
-    "50%": {
-      "success": 0.95,
-      "root": 1.0,
-      "evidence": 0.95,
-      "tokens": 3897.85,
-      "n_lines": 200,
-      "offset": 4
-    },
-    "20%": {
-      "success": 0.95,
-      "root": 1.0,
-      "evidence": 0.95,
-      "tokens": 2377.9,
-      "n_lines": 200,
-      "offset": 4
-    },
-    "10%": {
-      "success": 0.95,
-      "root": 1.0,
-      "evidence": 0.95,
-      "tokens": 1534.55,
-      "n_lines": 200,
-      "offset": 4
-    },
-    "5%": {
-      "success": 0.55,
-      "root": 0.8,
-      "evidence": 0.55,
-      "tokens": 903.15,
-      "n_lines": 200,
-      "offset": 4
-    },
-    "2%": {
-      "success": 0.55,
-      "root": 0.8,
-      "evidence": 0.55,
-      "tokens": 518.55,
-      "n_lines": 200,
-      "offset": 4
-    },
-    "1%": {
-      "success": 0.55,
-      "root": 0.8,
-      "evidence": 0.55,
-      "tokens": 421.45,
-      "n_lines": 200,
-      "offset": 4
+  {
+    "level": "5%",
+    "keep_chars": 1000,
+    "n": 20,
+    "solved": 11,
+    "success_rate": 0.55,
+    "root_hit": 16,
+    "evidence_hit": 11,
+    "avg_tokens": 906.0,
+    "avg_steps": 4.55,
+    "obs_raw": 499321,
+    "obs_kept": 48028,
+    "obs_ratio": 0.09618662143190453,
+    "guard": {
+      "guard_blocks": 0,
+      "confirm_blocks": 0,
+      "breaker_fastfail": 0,
+      "executed": 71
+    }
+  },
+  {
+    "level": "2%",
+    "keep_chars": 400,
+    "n": 20,
+    "solved": 11,
+    "success_rate": 0.55,
+    "root_hit": 16,
+    "evidence_hit": 11,
+    "avg_tokens": 518.6,
+    "avg_steps": 4.55,
+    "obs_raw": 499321,
+    "obs_kept": 18809,
+    "obs_ratio": 0.03766915471209903,
+    "guard": {
+      "guard_blocks": 0,
+      "confirm_blocks": 0,
+      "breaker_fastfail": 0,
+      "executed": 71
+    }
+  },
+  {
+    "level": "1%",
+    "keep_chars": 200,
+    "n": 20,
+    "solved": 11,
+    "success_rate": 0.55,
+    "root_hit": 16,
+    "evidence_hit": 11,
+    "avg_tokens": 421.5,
+    "avg_steps": 4.55,
+    "obs_raw": 499321,
+    "obs_kept": 11489,
+    "obs_ratio": 0.023009246556824167,
+    "guard": {
+      "guard_blocks": 0,
+      "confirm_blocks": 0,
+      "breaker_fastfail": 0,
+      "executed": 71
     }
   }
-}
+]

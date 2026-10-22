@@ -17,6 +17,8 @@ from agentops.opssandbox.tools import build_registry, task_of
 
 def main():
     cid = sys.argv[1] if len(sys.argv) > 1 else 'ops01'
+    if cid.isdigit():  # 允许 `debug_one 3` 简写，规范化为 ops03
+        cid = f'ops{int(cid):02d}'
     keep = int(sys.argv[2]) if len(sys.argv) > 2 else 0
     case = scenario.CASE_BY_ID[cid]
     reg = build_registry(case)

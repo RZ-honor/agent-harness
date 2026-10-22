@@ -1,0 +1,57 @@
+{
+  "part1": [
+    {
+      "level": "100%(不压缩)",
+      "solved_off": 20,
+      "solved_on": 20,
+      "gate_passed": 20,
+      "n": 20,
+      "events": {
+        "guard_blocks": 0,
+        "confirm_blocks": 0,
+        "breaker_fastfail": 0,
+        "executed": 71
+      }
+    },
+    {
+      "level": "20%",
+      "solved_off": 19,
+      "solved_on": 19,
+      "gate_passed": 19,
+      "n": 20,
+      "events": {
+        "guard_blocks": 0,
+        "confirm_blocks": 0,
+        "breaker_fastfail": 0,
+        "executed": 71
+      }
+    }
+  ],
+  "part2": [
+    {
+      "case": "write_without_confirm_blocked",
+      "pass": true
+    },
+    {
+      "case": "write_with_confirm_executed",
+      "pass": true
+    },
+    {
+      "case": "danger_always_blocked",
+      "pass": true
+    },
+    {
+      "case": "unregistered_tool_blocked",
+      "pass": true
+    },
+    {
+      "case": "gate_real_pass_fake_reject",
+      "pass": true
+    },
+    {
+      "case": "breaker_opens_after_3_failures",
+      "pass": true
+    }
+  ],
+  "all_pass": true
+}

@@ -297,7 +297,7 @@ class ToolExecutor:
     """
     工具执行器。写操作走幂等路径：
 
-        幂等键 = hash(tool_name + canonical(args))
+        幂等键 = sha1(tool_name + canonical(args))
 
     key 用**规范化参数**生成，所以模型把相同内容用不同 key 顺序表达时也能命中。
     只对 is_write 的工具启用——读工具天然幂等，缓存反而会返回过期数据。

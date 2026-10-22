@@ -33,8 +33,13 @@ def classify(r) -> str:
     if not r.score.root_hit and r.score.evidence_hit:
         return 'root_misjudged'         # 有证据却判错根因
     if not r.score.root_hit and not r.score.evidence_hit:
-        return 'both_lost'              # 信息整体丢失
+        return 'both_lost'              # 信息整体丢失（根因同样未命中）
     return 'other'
+
+
+def root_lost_count(d: dict) -> int:
+    """根因未命中的案例数 = root_misjudged + both_lost。"""
+    return d['root_misjudged'] + d['both_lost']
 
 
 def main():
@@ -94,15 +99,21 @@ def main():
     base = detail['100%(不压缩)']
     at20 = detail['20%']
     at5 = detail['5%']
-    print(f'  基线 token {base["tokens"]:.0f}，成功率 20/20')
+    print(f'  基线 token {base["tokens"]:.0f}，成功率 {base["ok"]}/20')
     print(f'  20% 档：token {at20["tokens"]:.0f}（省 {1 - at20["tokens"] / base["tokens"]:.0%}），'
-          f'成功率 {at20["ok"]}/20（未损）')
+          f'成功率 {at20["ok"]}/20（较基线 -{base["ok"] - at20["ok"]}）')
     print(f'  5%  档：token {at5["tokens"]:.0f}（省 {1 - at5["tokens"] / base["tokens"]:.0%}），'
-          f'成功率 {at5["ok"]}/20（已损）')
+          f'成功率 {at5["ok"]}/20')
     print(f'  5% 档失败构成：证据丢失 {at5["evidence_lost"]}、'
           f'根因误判 {at5["root_misjudged"]}、整体丢失 {at5["both_lost"]}')
+    # 根因稳定性：各档"根因未命中数"（root_misjudged + both_lost）
+    print('  各档根因未命中数（0 表示该档根因判定全部正确）：')
+    for name, _ in LEVELS:
+        d = detail[name]
+        print(f'    {name:<14} 根因未命中 {root_lost_count(d):>2}/20'
+              f'  失败中纯证据丢失 {d["evidence_lost"]} 例')
 
-    Path('agentops/opssandbox/boundary_result.json').write_text(
+    (Path(__file__).resolve().parent / 'boundary_result.json').write_text(
         json.dumps(detail, ensure_ascii=False, indent=2), encoding='utf-8')
 
 

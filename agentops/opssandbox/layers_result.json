@@ -3,7 +3,8 @@
     "naive": 80,
     "with_memory": 25,
     "saved": 55,
-    "rate": 0.6875
+    "rate": 0.6875,
+    "basis": "query-plan replay (not live loop)"
   },
   "verifier": {
     "n": 20,
@@ -13,8 +14,8 @@
     "errors": []
   },
   "action_guard": {
-    "n": 6,
-    "correct": 6,
+    "n": 7,
+    "correct": 7,
     "rows": [
       {
         "probe": "query_logs",
@@ -41,6 +42,12 @@
         "ok": true
       },
       {
+        "probe": "drop_table",
+        "want": false,
+        "got": false,
+        "ok": true
+      },
+      {
         "probe": "drop_database",
         "want": false,
         "got": false,
@@ -56,9 +63,34 @@
   },
   "latency": {
     "n": 20,
-    "mean": 0.6807149991800543,
-    "p50": 0.8999999990919605,
-    "p95": 1.684600007138215,
-    "max": 2.016200000070967
+    "mean": 0.5263349987217225,
+    "p50": 0.8318000036524609,
+    "p95": 1.348699996015057,
+    "max": 1.9517999899107963
+  },
+  "tool_cost": {
+    "total_calls": 71,
+    "per_tool": {
+      "query_topology": {
+        "calls": 20,
+        "chars": 2794,
+        "call_share": 0.28169014084507044,
+        "char_share": 0.00559492651903056
+      },
+      "query_logs": {
+        "calls": 31,
+        "chars": 475845,
+        "call_share": 0.43661971830985913,
+        "char_share": 0.9528696526299559
+      },
+      "query_metrics": {
+        "calls": 20,
+        "chars": 20742,
+        "call_share": 0.28169014084507044,
+        "char_share": 0.041535420851013555
+      }
+    },
+    "query_logs_call_share": 0.43661971830985913,
+    "query_logs_char_share": 0.9528696526299559
   }
 }

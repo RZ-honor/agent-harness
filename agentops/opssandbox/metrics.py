@@ -17,7 +17,9 @@ from agentops.opssandbox.verifier import ActionVerifier, ConclusionVerifier
 
 
 def memory_gain() -> dict:
-    """重复查询抑制：无记忆 vs 有记忆。"""
+    """重复查询抑制（查询计划重放口径）：每案例告警服务与根因服务各需查询一次，
+    无记忆时按朴素计划重复取，有记忆时排除已查过的服务。
+    注意：这是计划级重放，不是真实回路——真实回路统计见 tool_cost_attribution。"""
     naive = 4 * len(scenario.CASES)          # 告警与根因各查两遍
     with_mem = 0
     for c in scenario.CASES:
@@ -28,7 +30,31 @@ def memory_gain() -> dict:
                 with_mem += 1
     return {'naive': naive, 'with_memory': with_mem,
             'saved': naive - with_mem,
-            'rate': (naive - with_mem) / max(naive, 1)}
+            'rate': (naive - with_mem) / max(naive, 1),
+            'basis': 'query-plan replay (not live loop)'}
+
+
+def tool_cost_attribution() -> dict:
+    """真实回路的每工具调用数与观测体积归因（基线档，护栏回路记录）。"""
+    from agentops.opssandbox.sweep import run_one
+    per_tool: dict = {}
+    total_calls = 0
+    total_chars = 0
+    for c in scenario.CASES:
+        r = run_one(c, None, guard=True)
+        for name, v in (r.guard_stats.get('per_tool') or {}).items():
+            d = per_tool.setdefault(name, {'calls': 0, 'chars': 0})
+            d['calls'] += v['calls']
+            d['chars'] += v['chars']
+            total_calls += v['calls']
+            total_chars += v['chars']
+    for name, d in per_tool.items():
+        d['call_share'] = d['calls'] / max(total_calls, 1)
+        d['char_share'] = d['chars'] / max(total_chars, 1)
+    logs = per_tool.get('query_logs', {})
+    return {'total_calls': total_calls, 'per_tool': per_tool,
+            'query_logs_call_share': logs.get('call_share', 0),
+            'query_logs_char_share': logs.get('char_share', 0)}
 
 
 def verifier_accuracy() -> dict:
@@ -62,7 +88,8 @@ def action_guard() -> dict:
         ('query_logs', {'service': 'ghost-svc'}, False),
         ('run_diagnostic', {'service': 'order-svc', 'command': 'top -H'}, True),
         ('run_diagnostic', {'service': 'order-svc', 'command': 'a;b'}, False),
-        ('drop_database', {}, False),
+        ('drop_table', {'table': 'users'}, False),      # 危险档：直接拒绝
+        ('drop_database', {}, False),                    # 未登记：白名单拒绝
         ('query_topology', {}, True),
     ]
     rows = []
@@ -88,14 +115,25 @@ def latency_profile() -> dict:
 
 def main():
     rep = {'memory': memory_gain(), 'verifier': verifier_accuracy(),
-           'action_guard': action_guard(), 'latency': latency_profile()}
+           'action_guard': action_guard(), 'latency': latency_profile(),
+           'tool_cost': tool_cost_attribution()}
 
     print('=' * 68)
-    print('Memory 层 · 重复查询抑制')
+    print('Memory 层 · 重复查询抑制（查询计划重放口径）')
     print('=' * 68)
     m = rep['memory']
     print(f'  无记忆 {m["naive"]} 次 → 有记忆 {m["with_memory"]} 次'
           f'，节省 {m["saved"]} 次（{m["rate"]:.1%}）')
+
+    print()
+    print('=' * 68)
+    print('Observability · 真实回路工具成本归因（基线档）')
+    print('=' * 68)
+    tc = rep['tool_cost']
+    print(f'  总调用 {tc["total_calls"]} 次')
+    for name, d in sorted(tc['per_tool'].items(), key=lambda x: -x[1]['chars']):
+        print(f'    {name:<16} calls={d["calls"]:>3} ({d["call_share"]:.1%})  '
+              f'chars={d["chars"]:>8} ({d["char_share"]:.1%})')
 
     print()
     print('=' * 68)
@@ -126,7 +164,7 @@ def main():
     print(f'  n={l["n"]} mean={l["mean"]:.1f}ms p50={l["p50"]:.1f}ms '
           f'p95={l["p95"]:.1f}ms max={l["max"]:.1f}ms')
 
-    out = Path('agentops/opssandbox/layers_result.json')
+    out = Path(__file__).resolve().parent / 'layers_result.json'
     out.write_text(json.dumps(rep, ensure_ascii=False, indent=2), encoding='utf-8')
     print(f'\n已写入 {out}')
 

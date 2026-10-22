@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import json
 import os
+import zlib
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -168,5 +169,5 @@ class ScriptedLLM:
 
 def tool_call(name: str, **arguments) -> ToolCall:
     """构造一个工具调用的便捷函数（脚本化测试用）。"""
-    return ToolCall(id=f'call_{name}_{abs(hash((name, tuple(sorted(arguments.items())))))}',
+    return ToolCall(id=f'call_{name}_{zlib.crc32(repr((name, sorted(arguments.items()))).encode()):08x}',
                     name=name, arguments=arguments)

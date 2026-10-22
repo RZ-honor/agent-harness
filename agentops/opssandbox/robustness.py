@@ -152,7 +152,7 @@ def main():
             print(f'  {row["cid"]:6} {row["fault"]:18} root={row["root_hit"]} '
                   f'ev={row["evidence_hit"]}  {row["note"]}')
 
-    out = Path('agentops/opssandbox/sweep_result.json')
+    out = Path(__file__).resolve().parent / 'robust_result.json'
     out.write_text(json.dumps(all_rows, ensure_ascii=False, indent=2), encoding='utf-8')
     print(f'\n已写入 {out}')
 
