@@ -1,0 +1,81 @@
+{
+  "total_outputs": 365,
+  "outputs_ge_min": 85,
+  "min_chars": 1000,
+  "size_p50": 304,
+  "size_max": 32793,
+  "size_total": 447742,
+  "levels": [
+    {
+      "level": "100%(不压缩)",
+      "ratio": 1.0,
+      "actual_obs_ratio": 1.0,
+      "evidence_survival": 1.0,
+      "evidence_total": 351,
+      "worst_output_survival": 1.0,
+      "token_saving_vs_raw": 0.0,
+      "naive_evidence_survival": 1.0
+    },
+    {
+      "level": "50%",
+      "ratio": 0.5,
+      "actual_obs_ratio": 0.33220378174971305,
+      "evidence_survival": 0.08831908831908832,
+      "evidence_total": 351,
+      "worst_output_survival": 0.0,
+      "token_saving_vs_raw": 0.667796218250287,
+      "naive_evidence_survival": 0.5356125356125356
+    },
+    {
+      "level": "20%",
+      "ratio": 0.2,
+      "actual_obs_ratio": 0.17690924956850396,
+      "evidence_survival": 0.05982905982905983,
+      "evidence_total": 351,
+      "worst_output_survival": 0.0,
+      "token_saving_vs_raw": 0.823090750431496,
+      "naive_evidence_survival": 0.27635327635327633
+    },
+    {
+      "level": "10%",
+      "ratio": 0.1,
+      "actual_obs_ratio": 0.10238361994213686,
+      "evidence_survival": 0.037037037037037035,
+      "evidence_total": 351,
+      "worst_output_survival": 0.0,
+      "token_saving_vs_raw": 0.8976163800578632,
+      "naive_evidence_survival": 0.15384615384615385
+    },
+    {
+      "level": "5%",
+      "ratio": 0.05,
+      "actual_obs_ratio": 0.06749231290138767,
+      "evidence_survival": 0.02564102564102564,
+      "evidence_total": 351,
+      "worst_output_survival": 0.0,
+      "token_saving_vs_raw": 0.9325076870986123,
+      "naive_evidence_survival": 0.10541310541310542
+    },
+    {
+      "level": "2%",
+      "ratio": 0.02,
+      "actual_obs_ratio": 0.05280905990293747,
+      "evidence_survival": 0.022792022792022793,
+      "evidence_total": 351,
+      "worst_output_survival": 0.0,
+      "token_saving_vs_raw": 0.9471909400970625,
+      "naive_evidence_survival": 0.08831908831908832
+    },
+    {
+      "level": "1%",
+      "ratio": 0.01,
+      "actual_obs_ratio": 0.05093167359904864,
+      "evidence_survival": 0.022792022792022793,
+      "evidence_total": 351,
+      "worst_output_survival": 0.0,
+      "token_saving_vs_raw": 0.9490683264009514,
+      "naive_evidence_survival": 0.08547008547008547
+    }
+  ],
+  "outputs_with_evidence": 55
+}

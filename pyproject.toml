@@ -9,7 +9,7 @@ description = "Agent runtime harness: execution guardrails and context budget, f
 requires-python = ">=3.10"
 
 [tool.setuptools]
-packages = ["miniagent", "agentops", "agentops.opssandbox"]
+packages = ["miniagent", "agentops", "agentops.opssandbox", "agentops.realdata"]
 
 [tool.pytest.ini_options]
 testpaths = ["miniagent/tests", "agentops/tests", "agentops/opssandbox"]

@@ -19,6 +19,7 @@ python -m agentops.opssandbox.robustness    # 5 种子随机扰动重跑
 python -m agentops.opssandbox.boundary_diag # 失败模式归因（含各档根因未命中数）
 python -m agentops.opssandbox.metrics       # 记忆/门禁/护栏 + 真实回路工具成本归因
 python -m agentops.opssandbox.debug_one ops03   # 回放单案例完整 trace（也接受 `debug_one 3` 简写）
+python -m agentops.realdata.rollout_sweep <rollout.jsonl>  # 用你自己的 codex 会话输出复测压缩器（只输出聚合统计）
 ```
 
 ## 简历数字 ↔ 复现命令对照
@@ -77,6 +78,7 @@ agentops/opssandbox/          运维排障实验场（确定性合成故障）
 ## 已知边界（诚实声明）
 
 - 故障场景为程序化合成的确定性数据（`scenario.py`，稳定哈希保证跨进程一致），非真实生产日志；结论刻画的是该场景分布下机制的行为边界。
+- **真实数据复测发现压缩器的适用边界**：在真实编码 Agent 会话的 365 条工具输出上，当前压缩器（运维日志词表调参）劣于头尾截断（8.8% vs 53.6% 证据存活），根因已定位——详见 [VERIFICATION.md](VERIFICATION.md) 的"真实工具调用数据验证"节；域自适应词表 + 尾部加权是下一迭代首要项。
 - 脚本策略代理代表"称职模型"行为上界；接入真实 LLM 时曲线形状预期保持，绝对数值会变。
 - 根因判定稳定性仅在**工作点及以上档位**成立（50%/20%/10% 档根因未命中 0/20）；跌破 10% 后根因同样退化（5% 档 4/20 未命中）——这本身就是"悬崖"的一部分。
 - "重复查询 80→25" 为查询计划重放口径（每案例告警+根因各查两遍的朴素计划 vs 记忆排除后），真实回路总调用为 71 次（见 `metrics` 两节分别标注）。
