@@ -12,14 +12,14 @@ An Agent runtime harness with execution guardrails (tiered tool permissions, con
 pip install pytest
 git clone https://github.com/RZ-honor/agent-harness.git && cd agent-harness
 
-pytest -q                                   # 83 项测试，全绿即环境正确（含跨 PYTHONHASHSEED 确定性回归）
+pytest -q                                   # 87 项测试，全绿即环境正确（含跨 PYTHONHASHSEED 确定性回归）
 python -m agentops.opssandbox.sweep --guard --save   # 压缩率-成功率曲线（护栏回路开启，秒级完成）
 python -m agentops.opssandbox.guard_e2e     # 护栏回路端到端：正路等价 + 对抗路拦截
 python -m agentops.opssandbox.robustness    # 5 种子随机扰动重跑
 python -m agentops.opssandbox.boundary_diag # 失败模式归因（含各档根因未命中数）
 python -m agentops.opssandbox.metrics       # 记忆/门禁/护栏 + 真实回路工具成本归因
 python -m agentops.opssandbox.debug_one ops03   # 回放单案例完整 trace（也接受 `debug_one 3` 简写）
-python -m agentops.realdata.rollout_sweep <rollout.jsonl>  # 用你自己的 codex 会话输出复测压缩器（只输出聚合统计）
+python -m agentops.realdata.rollout_sweep <rollout.jsonl> --compare  # 用你自己的 codex 会话输出复测压缩策略（只输出聚合统计）
 ```
 
 ## 简历数字 ↔ 复现命令对照
@@ -40,6 +40,7 @@ python -m agentops.realdata.rollout_sweep <rollout.jsonl>  # 用你自己的 cod
 | 连续失败 3 次熔断 + 300s 冷却、三级分权 | `test_breaker_tiers.py` + `test_guard_loop.py` |
 | 压实-重取循环防护（大输出调用保留在去重检查内） | `test_compaction_coupling.py` |
 | 完全确定性（同命令两次输出一致、跨 hash seed 一致） | `test_determinism.py`（含子进程跨 PYTHONHASHSEED 比对） |
+| 真实编码会话 365 条工具输出：50% 预算证据存活 91.7%、完全可用 92.9% | `python -m agentops.realdata.rollout_sweep <rollout.jsonl> --compare`（需自备会话文件） |
 
 ## 架构
 
@@ -64,7 +65,8 @@ agentops/opssandbox/          运维排障实验场（确定性合成故障）
 ├── verifier.py               动作门禁（读/写/危险三级分权+确认强制）
 │                             结论门禁（引用逐字可回溯，整段子串匹配）
 ├── breaker.py                工具熔断器：连续 3 次失败打开、300 秒冷却
-└── sweep / guard_e2e / robustness / boundary_diag / metrics   五组实验
+├── sweep / guard_e2e / robustness / boundary_diag / metrics   五组实验
+└── realdata/                 真实会话复测（rollout JSONL → 聚合统计，零原文入库）
 ```
 
 ## 设计决策
@@ -78,7 +80,7 @@ agentops/opssandbox/          运维排障实验场（确定性合成故障）
 ## 已知边界（诚实声明）
 
 - 故障场景为程序化合成的确定性数据（`scenario.py`，稳定哈希保证跨进程一致），非真实生产日志；结论刻画的是该场景分布下机制的行为边界。
-- **真实数据复测发现压缩器的适用边界**：在真实编码 Agent 会话的 365 条工具输出上，当前压缩器（运维日志词表调参）劣于头尾截断（8.8% vs 53.6% 证据存活），根因已定位——详见 [VERIFICATION.md](VERIFICATION.md) 的"真实工具调用数据验证"节；域自适应词表 + 尾部加权是下一迭代首要项。
+- **压缩器已做域自适应，并用真实数据验证**：`profile='coding'` 在真实编码 Agent 会话（365 条工具输出）上，50% 预算证据存活 91.7%、下一跳完全可用 92.9%（优于头尾截断的 53.6% / 71.8%）；`profile='ops'` 保持合成沙箱全部数字不变。详见 [VERIFICATION.md](VERIFICATION.md) 与 [docs/上下文压缩方案调研.md](docs/上下文压缩方案调研.md)。
 - 脚本策略代理代表"称职模型"行为上界；接入真实 LLM 时曲线形状预期保持，绝对数值会变。
 - 根因判定稳定性仅在**工作点及以上档位**成立（50%/20%/10% 档根因未命中 0/20）；跌破 10% 后根因同样退化（5% 档 4/20 未命中）——这本身就是"悬崖"的一部分。
 - "重复查询 80→25" 为查询计划重放口径（每案例告警+根因各查两遍的朴素计划 vs 记忆排除后），真实回路总调用为 71 次（见 `metrics` 两节分别标注）。
@@ -88,7 +90,7 @@ agentops/opssandbox/          运维排障实验场（确定性合成故障）
 ## 测试
 
 ```
-pytest -q          # 83 passed
+pytest -q          # 87 passed
 ├── miniagent/tests/test_miniagent.py          运行时核心
 ├── agentops/tests/test_idempotency.py         幂等与并发单飞
 └── agentops/opssandbox/
@@ -97,7 +99,8 @@ pytest -q          # 83 passed
     ├── test_breaker_tiers.py                  熔断与三级分权
     ├── test_compaction_coupling.py            压实-去重耦合
     ├── test_guard_loop.py                     护栏活在回路（对抗六项）
-    └── test_determinism.py                    跨进程确定性回归
+    ├── test_determinism.py                    跨进程确定性回归
+    └── agentops/realdata/test_realdata.py     编码域压缩档回归
 ```
 
 ## License

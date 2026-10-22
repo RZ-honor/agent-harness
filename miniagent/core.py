@@ -48,6 +48,7 @@ class AgentConfig:
     compress_observations: bool = True # 改进点 B 开关（便于消融）
     obs_limit_chars: int = 1200        # 单条观测进入上下文的字符上限
     obs_window_chars: int = 220        # 压缩时每个命中点保留的窗口
+    obs_profile: str = 'ops'           # 压缩词表档位：ops（运维日志）/ coding（编码输出）/ auto
     idempotent_tools: bool = True      # 改进点 C 开关（便于消融）
     # 压缩与重复调用拦截的耦合（参照 HolmesGPT 的 reset 语义）：
     # 压缩后是否重置"重复调用检查"。默认 True——历史已被摘要替换，
@@ -147,9 +148,40 @@ class ObservationCompressor:
     WEAK = ('WARN', 'WARNING', 'retry', 'slow', 'lag', 'throttl', 'degrad',
             'circuit', 'fallback', 'rtt', 'latency', 'usage', '%')
 
-    def __init__(self, limit_chars: int = 1200, window_chars: int = 220):
+    # ------------------------------------------------------------------
+    # coding 档：编码 Agent 的工具输出（构建日志/测试输出/命令报错）
+    # 真实会话实测：运维词表对编码类证据行只命中 1.4%，因此单独建域。
+    # 全部小写匹配（大小写不敏感），与 ops 档互不影响。
+    # ------------------------------------------------------------------
+    STRONG_CI = ('error', 'failed', 'fail:', 'failure', 'assertionerror',
+                 'traceback', 'panic', 'fatal', 'denied', 'cannot',
+                 'could not', 'not found', 'no such file', 'invalid',
+                 'missing', 'undefined', 'syntaxerror', 'typeerror',
+                 'valueerror', 'importerror', 'segmentation fault',
+                 'killed', 'npm err', 'error ts', 'build failed',
+                 'test failed', '✗', '❌')
+    WEAK_CI = ('warn', 'deprecat', 'skip', 'retry', 'timeout', 'timed out',
+               'refused', 'slow', 'usage', 'hint:', 'note:')
+
+    # 结构锚点：下一阶段模型必然要读的行（正则，忽略大小写）
+    ANCHOR_PATTERNS = (
+        r"[\w./\\-]+\.(?:py|ts|tsx|js|jsx|json|md|toml|ya?ml|go|rs|java|c|cc|cpp|h|hpp|sh|ps1|sql|html|css):\d+",
+        r"^\s*file\s+\".*\",\s+line\s+\d+",
+        r"^\s*at\s+.+:\d+:\d+",
+        r"^\s*\+{0,1}-{1}\s",          # diff 行（+++/--- 除外，见过滤）
+        r"^\s*\+[^+]{1}",              # diff 新增行
+        r"\b\d+\s+(?:passed|failed|errors?|skipped|warnings?)\b",
+        r"process exited with code\s*\d+",
+        r"exit(?:ed)? with code\s*[1-9]",
+    )
+
+    def __init__(self, limit_chars: int = 1200, window_chars: int = 220,
+                 profile: str = 'ops'):
         self.limit_chars = limit_chars
         self.window_chars = window_chars
+        self.profile = profile if profile in ('ops', 'coding', 'auto') else 'ops'
+        self._anchor_res = [__import__('re').compile(p, __import__('re').I)
+                            for p in self.ANCHOR_PATTERNS]
 
     def _terms(self, query: str, tool: str) -> list[str]:
         import re
@@ -157,18 +189,52 @@ class ObservationCompressor:
             r'[\u4e00-\u9fff]{2,6}|[A-Za-z][\w\-]{2,}', f'{query} {tool}')
             if len(t) >= 2]
 
-    def _score_line(self, line: str, terms: list[str]) -> float:
+    def _effective_profile(self, text: str) -> str:
+        """auto：按内容判断属于编码类还是运维类输出。
+
+        编码类工具的强特征（出现任一即判 coding）：命令执行头、栈回溯、
+        包管理器报错、TypeScript 报错、测试汇总行、源文件:行号。
+        其余（含 # service= 这类运维观测头）判 ops。
+        """
+        if self.profile != 'auto':
+            return self.profile
+        low = text.lower()
+        strong_indicators = ('process exited with code', 'traceback (most recent call last)',
+                             'npm err', 'error ts', 'yarn error', 'go build',
+                             'cargo error', 'segmentation fault')
+        if any(k in low for k in strong_indicators):
+            return 'coding'
+        if self._anchor_res[0].search(text) and '\n' in text:   # file:line
+            return 'coding'
+        return 'ops'
+
+    def _score_line(self, line: str, terms: list[str],
+                    pos_ratio: float = 0.5, profile: str = 'ops') -> float:
         s = line.strip()
         if not s:
             return 0.0
         sc = 0.0
-        # 强/弱信号必须拉开档次：实测同权重下，29 条 WARN 噪声会挤掉
-        # 中段的 ERROR 证据行。这里让强信号 >= 100，弱信号 <= 3，
-        # 保证"含 ERROR 的行"在任何预算下都先于 WARN 行入选。
-        if any(k in line for k in self.STRONG):
-            sc += 100.0
-        if any(k in line for k in self.WEAK):
-            sc += 3.0
+        if profile == 'coding':
+            low = line.lower()
+            if any(k in low for k in self.STRONG_CI):
+                sc += 100.0
+            if any(k in low for k in self.WEAK_CI):
+                sc += 3.0
+            # 结构锚点：file:line、栈帧、diff 行、测试汇总、退出码
+            if any(p.search(line) for p in self._anchor_res):
+                sc += 60.0
+            # 位置加权：编码输出里证据集中在尾部（真实会话实测均值 0.61），
+            # 头部则是命令与退出码等结构信息，两端都给加成，中段只靠内容分。
+            if pos_ratio >= 0.80:
+                sc += 30.0
+            elif pos_ratio <= 0.05:
+                sc += 20.0
+        else:
+            # ops 档保持原行为不变（合成沙箱与简历数字以此为准）
+            if any(k in line for k in self.STRONG):
+                sc += 100.0
+            if any(k in line for k in self.WEAK):
+                sc += 3.0
         # 关键词命中：加权而非必要条件
         hits = sum(1 for t in terms if t in line)
         sc += min(hits, 4) * 2.0
@@ -242,7 +308,10 @@ class ObservationCompressor:
             return self._compress_single_line(text, raw_len, query, tool)
 
         terms = self._terms(query, tool)
-        scored = [(self._score_line(ln, terms), i) for i, ln in enumerate(lines)]
+        profile = self._effective_profile(text)
+        denom = max(len(lines) - 1, 1)
+        scored = [(self._score_line(ln, terms, i / denom, profile), i)
+                  for i, ln in enumerate(lines)]
 
         # 首行保留（通常是 "# service=..." 这类结构标识），
         # 否则压缩后无法判断这段观测属于哪个服务。
@@ -358,7 +427,8 @@ class MiniAgent:
         self.tools = tools
         self.cfg = config or AgentConfig()
         self.compressor = ObservationCompressor(self.cfg.obs_limit_chars,
-                                                self.cfg.obs_window_chars)
+                                                self.cfg.obs_window_chars,
+                                                profile=self.cfg.obs_profile)
         self.executor = ToolExecutor(self.cfg.idempotent_tools)
         # 已执行过的（工具, 参数）组合。用于拦截重复调用——
         # 只靠 prompt 约束不住：实测真实模型会连续 6 轮反复检索同一批关键词，
