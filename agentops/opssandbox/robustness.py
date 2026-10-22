@@ -153,7 +153,8 @@ def main():
                   f'ev={row["evidence_hit"]}  {row["note"]}')
 
     out = Path(__file__).resolve().parent / 'robust_result.json'
-    out.write_text(json.dumps(all_rows, ensure_ascii=False, indent=2), encoding='utf-8')
+    from agentops.jsonio import dump as _jd
+    _jd(out, all_rows)
     print(f'\n已写入 {out}')
 
 

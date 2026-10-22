@@ -63,10 +63,10 @@
   },
   "latency": {
     "n": 20,
-    "mean": 0.6209599989233539,
-    "p50": 0.9291000023949891,
-    "p95": 1.8691000004764646,
-    "max": 1.8693000019993633
+    "mean": 0.7916,
+    "p50": 0.9059,
+    "p95": 2.2373,
+    "max": 2.2498
   },
   "tool_cost": {
     "total_calls": 71,
@@ -74,23 +74,23 @@
       "query_topology": {
         "calls": 20,
         "chars": 2794,
-        "call_share": 0.28169014084507044,
-        "char_share": 0.00559492651903056
+        "call_share": 0.2817,
+        "char_share": 0.0056
       },
       "query_logs": {
         "calls": 31,
         "chars": 475845,
-        "call_share": 0.43661971830985913,
-        "char_share": 0.9528696526299559
+        "call_share": 0.4366,
+        "char_share": 0.9529
       },
       "query_metrics": {
         "calls": 20,
         "chars": 20742,
-        "call_share": 0.28169014084507044,
-        "char_share": 0.041535420851013555
+        "call_share": 0.2817,
+        "char_share": 0.0415
       }
     },
-    "query_logs_call_share": 0.43661971830985913,
-    "query_logs_char_share": 0.9528696526299559
+    "query_logs_call_share": 0.4366,
+    "query_logs_char_share": 0.9529
   }
 }

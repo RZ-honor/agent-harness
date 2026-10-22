@@ -217,7 +217,8 @@ def main():
     render(st)
     if args.save:
         out = Path(__file__).resolve().parent / "realdata_result.json"
-        out.write_text(json.dumps(st, ensure_ascii=False, indent=2), encoding="utf-8")
+        from agentops.jsonio import dump as _jd
+        _jd(out, st)
         print(f"\n已写入 {out}（仅聚合统计，无原文）")
 
 

@@ -106,9 +106,8 @@ def main():
         all_ok = all_ok and c['pass']
         print(f"  {mark} {c['case']}")
     out = Path(__file__).resolve().parent / 'guard_e2e_result.json'
-    out.write_text(json.dumps({'part1': p1, 'part2': p2,
-                               'all_pass': all_ok}, ensure_ascii=False, indent=2),
-                   encoding='utf-8')
+    from agentops.jsonio import dump as _jd
+    _jd(out, {'part1': p1, 'part2': p2, 'all_pass': all_ok})
     print(f"\n已写入 {out}")
     if not all_ok:
         sys.exit(1)

@@ -113,8 +113,8 @@ def main():
         print(f'    {name:<14} 根因未命中 {root_lost_count(d):>2}/20'
               f'  失败中纯证据丢失 {d["evidence_lost"]} 例')
 
-    (Path(__file__).resolve().parent / 'boundary_result.json').write_text(
-        json.dumps(detail, ensure_ascii=False, indent=2), encoding='utf-8')
+    from agentops.jsonio import dump as _jd
+    _jd(Path(__file__).resolve().parent / 'boundary_result.json', detail)
 
 
 if __name__ == '__main__':

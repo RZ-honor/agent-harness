@@ -31,6 +31,7 @@ if str(BASE) not in sys.path:
 from miniagent.core import AgentConfig, MiniAgent, ObservationCompressor
 from miniagent.llm import Reply, ScriptedLLM, tool_call
 
+from agentops import jsonio
 from agentops.opssandbox import scenario, scoring
 from agentops.opssandbox.operator import CompetentOperator
 from agentops.opssandbox.tools import build_registry, build_guarded_registry, task_of
@@ -182,8 +183,7 @@ def main():
     rows = sweep(cases, guard=args.guard)
     if args.save:
         out = Path(__file__).resolve().parent / 'sweep_result.json'
-        out.write_text(json.dumps(rows, ensure_ascii=False, indent=2),
-                       encoding='utf-8')
+        jsonio.dump(out, rows)
         print(f'已写入 {out}')
     if args.json:
         print(json.dumps(rows, ensure_ascii=False, indent=2))

@@ -165,7 +165,8 @@ def main():
           f'p95={l["p95"]:.1f}ms max={l["max"]:.1f}ms')
 
     out = Path(__file__).resolve().parent / 'layers_result.json'
-    out.write_text(json.dumps(rep, ensure_ascii=False, indent=2), encoding='utf-8')
+    from agentops.jsonio import dump as _jd
+    _jd(out, rep)
     print(f'\n已写入 {out}')
 
 
