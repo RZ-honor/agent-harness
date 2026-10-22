@@ -1,0 +1,21 @@
+{
+  "n_outputs": 365,
+  "total_chars": 447742,
+  "max_chars": 32793,
+  "median_chars": 304,
+  "mean_chars": 1226.7,
+  "top_share": {
+    "5%": {
+      "count": 18,
+      "char_share": 0.4623
+    },
+    "10%": {
+      "count": 36,
+      "char_share": 0.6198
+    },
+    "20%": {
+      "count": 73,
+      "char_share": 0.7815
+    }
+  }
+}
