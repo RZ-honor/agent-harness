@@ -39,6 +39,10 @@ EVIDENCE_PAT = re.compile(
 FILELINE_PAT = re.compile(
     r"[\w./\\-]+\.(?:py|ts|tsx|js|jsx|json|md|toml|ya?ml|go|rs|java|c|cc|cpp|h|hpp|sh|ps1|sql):\d+")
 EXIT_PAT = re.compile(r"(?i)(?:exited with code|exit code)\s*[:=]?\s*(-?\d+)")
+# 严格错误行：明确异常/失败标记，且排除横幅行与分隔线
+ERR_STRICT = re.compile(
+    r"(?:\bERROR\b|Traceback \(most recent call last\)|\b(?:AssertionError|AttributeError|TypeError|ValueError|ImportError|KeyError|IndexError|RuntimeError|SyntaxError|NameError|OSError|SubprocessError)\b|\bfailed\b|\bfailure\b|error:|\bpanic:|fatal:)",
+    re.I)
 SUMMARY_PAT = re.compile(r"(?i)\b\d+\s+(?:passed|failed|errors?|skipped)\b")
 
 LEVELS = [(1.0, "100%(不压缩)"), (0.5, "50%"), (0.2, "20%"),
@@ -74,25 +78,53 @@ def evidence_lines(text: str) -> list[str]:
 
 
 def anchors_of(text: str) -> dict:
-    """下一阶段模型要用的四类锚点。"""
+    """下一阶段模型要用的锚点。
+
+    错误行取"候选集"而非单行：真实输出里常有多个报错点，模型复述任一都算
+    答对；且仅在确有失败迹象（非零退出码/栈回溯/FAILED 测试）时才有错误行锚点，
+    避免把"测试名里含 error"这类行当成错误。
+    """
     a = {"exit": [], "fileline": [], "errline": [], "summary": []}
     m = EXIT_PAT.search(text)
     if m:
         a["exit"].append(_norm(m.group(0)))
     seen = set()
-    for m in FILELINE_PAT.finditer(text):
-        fl = _norm(m.group(0))
+    for mm in FILELINE_PAT.finditer(text):
+        fl = _norm(mm.group(0))
         if fl not in seen:
             seen.add(fl)
             a["fileline"].append(fl)
         if len(a["fileline"]) >= 3:
             break
-    for line in text.splitlines():
-        if line.strip() and EVIDENCE_PAT.search(line):
-            a["errline"].append(_norm(line)[:100])
-            break
-    for m in SUMMARY_PAT.finditer(text):
-        v = _norm(m.group(0))
+    # 失败迹象判定
+    fail_signal = False
+    em = EXIT_PAT.search(text)
+    if em and em.group(1).strip() not in ("0",):
+        fail_signal = True
+    low = text.lower()
+    if ("traceback (most recent call last)" in low or "error:" in low
+            or "failed" in low or "panic:" in low or "fatal:" in low):
+        fail_signal = True
+    if fail_signal:
+        for line in text.splitlines():
+            st = line.strip()
+            if not st or len(st) < 8:
+                continue
+            if sum(ch in '=-#*' for ch in st) / len(st) > 0.3:   # 横幅/分隔线
+                continue
+            if not ERR_STRICT.search(st):
+                continue
+            # 排除"测试名 + FAILED"这类被误当错误行的情形：
+            # 行内出现 FAILED 且前面是同行的测试标识，不算错误描述
+            if st.upper().startswith("FAILED ") or " FAILED " in st:
+                continue
+            n = _norm(st)[:100]
+            if n and n not in a["errline"]:
+                a["errline"].append(n)
+            if len(a["errline"]) >= 3:
+                break
+    for mm in SUMMARY_PAT.finditer(text):
+        v = _norm(mm.group(0))
         if v not in a["summary"]:
             a["summary"].append(v)
     return a

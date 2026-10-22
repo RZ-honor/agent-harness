@@ -28,9 +28,9 @@
         "evidence_survival": 0.0883,
         "exit_survival": 0.0,
         "fileline_survival": 0.375,
-        "errline_survival": 0.3091,
+        "errline_survival": 0.0862,
         "summary_survival": 0.186,
-        "usable_rate": 0.1059,
+        "usable_rate": 0.0824,
         "outputs_with_anchors": 85
       },
       {
@@ -41,9 +41,9 @@
         "evidence_survival": 0.0598,
         "exit_survival": 0.0,
         "fileline_survival": 0.3393,
-        "errline_survival": 0.2727,
+        "errline_survival": 0.0862,
         "summary_survival": 0.0,
-        "usable_rate": 0.0588,
+        "usable_rate": 0.0353,
         "outputs_with_anchors": 85
       },
       {
@@ -54,9 +54,9 @@
         "evidence_survival": 0.037,
         "exit_survival": 0.0,
         "fileline_survival": 0.3036,
-        "errline_survival": 0.2182,
+        "errline_survival": 0.0862,
         "summary_survival": 0.0,
-        "usable_rate": 0.0588,
+        "usable_rate": 0.0353,
         "outputs_with_anchors": 85
       },
       {
@@ -67,9 +67,9 @@
         "evidence_survival": 0.0256,
         "exit_survival": 0.0,
         "fileline_survival": 0.25,
-        "errline_survival": 0.2,
+        "errline_survival": 0.0862,
         "summary_survival": 0.0,
-        "usable_rate": 0.0588,
+        "usable_rate": 0.0353,
         "outputs_with_anchors": 85
       },
       {
@@ -80,9 +80,9 @@
         "evidence_survival": 0.0228,
         "exit_survival": 0.0,
         "fileline_survival": 0.0179,
-        "errline_survival": 0.1818,
+        "errline_survival": 0.0862,
         "summary_survival": 0.0,
-        "usable_rate": 0.0353,
+        "usable_rate": 0.0118,
         "outputs_with_anchors": 85
       },
       {
@@ -93,9 +93,9 @@
         "evidence_survival": 0.0228,
         "exit_survival": 0.0,
         "fileline_survival": 0.0179,
-        "errline_survival": 0.1818,
+        "errline_survival": 0.0862,
         "summary_survival": 0.0,
-        "usable_rate": 0.0353,
+        "usable_rate": 0.0118,
         "outputs_with_anchors": 85
       }
     ],
@@ -121,9 +121,9 @@
         "evidence_survival": 0.9174,
         "exit_survival": 1.0,
         "fileline_survival": 0.9286,
-        "errline_survival": 0.9455,
+        "errline_survival": 0.9828,
         "summary_survival": 1.0,
-        "usable_rate": 0.9294,
+        "usable_rate": 0.9647,
         "outputs_with_anchors": 85
       },
       {
@@ -134,9 +134,9 @@
         "evidence_survival": 0.6581,
         "exit_survival": 0.9211,
         "fileline_survival": 0.7321,
-        "errline_survival": 0.8,
+        "errline_survival": 0.8621,
         "summary_survival": 0.8605,
-        "usable_rate": 0.7412,
+        "usable_rate": 0.7882,
         "outputs_with_anchors": 85
       },
       {
@@ -147,9 +147,9 @@
         "evidence_survival": 0.5271,
         "exit_survival": 0.7895,
         "fileline_survival": 0.6429,
-        "errline_survival": 0.7091,
+        "errline_survival": 0.7586,
         "summary_survival": 0.7674,
-        "usable_rate": 0.6471,
+        "usable_rate": 0.6706,
         "outputs_with_anchors": 85
       },
       {
@@ -160,9 +160,9 @@
         "evidence_survival": 0.4103,
         "exit_survival": 0.7763,
         "fileline_survival": 0.5893,
-        "errline_survival": 0.6,
+        "errline_survival": 0.7069,
         "summary_survival": 0.7442,
-        "usable_rate": 0.5882,
+        "usable_rate": 0.6471,
         "outputs_with_anchors": 85
       },
       {
@@ -173,9 +173,9 @@
         "evidence_survival": 0.3162,
         "exit_survival": 0.7237,
         "fileline_survival": 0.3214,
-        "errline_survival": 0.6,
+        "errline_survival": 0.6379,
         "summary_survival": 0.7209,
-        "usable_rate": 0.5412,
+        "usable_rate": 0.6,
         "outputs_with_anchors": 85
       },
       {
@@ -186,9 +186,9 @@
         "evidence_survival": 0.2934,
         "exit_survival": 0.7368,
         "fileline_survival": 0.2857,
-        "errline_survival": 0.5818,
+        "errline_survival": 0.569,
         "summary_survival": 0.7209,
-        "usable_rate": 0.5529,
+        "usable_rate": 0.6118,
         "outputs_with_anchors": 85
       }
     ],
@@ -214,9 +214,9 @@
         "evidence_survival": 0.9117,
         "exit_survival": 1.0,
         "fileline_survival": 0.9286,
-        "errline_survival": 0.9455,
+        "errline_survival": 0.9483,
         "summary_survival": 1.0,
-        "usable_rate": 0.9294,
+        "usable_rate": 0.9529,
         "outputs_with_anchors": 85
       },
       {
@@ -227,9 +227,9 @@
         "evidence_survival": 0.6553,
         "exit_survival": 0.9211,
         "fileline_survival": 0.7321,
-        "errline_survival": 0.8,
+        "errline_survival": 0.8448,
         "summary_survival": 0.8605,
-        "usable_rate": 0.7412,
+        "usable_rate": 0.7882,
         "outputs_with_anchors": 85
       },
       {
@@ -240,9 +240,9 @@
         "evidence_survival": 0.5242,
         "exit_survival": 0.7895,
         "fileline_survival": 0.6429,
-        "errline_survival": 0.7091,
+        "errline_survival": 0.7414,
         "summary_survival": 0.7674,
-        "usable_rate": 0.6471,
+        "usable_rate": 0.6706,
         "outputs_with_anchors": 85
       },
       {
@@ -253,9 +253,9 @@
         "evidence_survival": 0.4074,
         "exit_survival": 0.7763,
         "fileline_survival": 0.5893,
-        "errline_survival": 0.6,
+        "errline_survival": 0.6897,
         "summary_survival": 0.7442,
-        "usable_rate": 0.5882,
+        "usable_rate": 0.6471,
         "outputs_with_anchors": 85
       },
       {
@@ -266,9 +266,9 @@
         "evidence_survival": 0.3134,
         "exit_survival": 0.7237,
         "fileline_survival": 0.3214,
-        "errline_survival": 0.6,
+        "errline_survival": 0.6207,
         "summary_survival": 0.7209,
-        "usable_rate": 0.5412,
+        "usable_rate": 0.6,
         "outputs_with_anchors": 85
       },
       {
@@ -279,9 +279,9 @@
         "evidence_survival": 0.2906,
         "exit_survival": 0.7368,
         "fileline_survival": 0.2857,
-        "errline_survival": 0.5818,
+        "errline_survival": 0.5517,
         "summary_survival": 0.7209,
-        "usable_rate": 0.5529,
+        "usable_rate": 0.6118,
         "outputs_with_anchors": 85
       }
     ],
@@ -307,9 +307,9 @@
         "evidence_survival": 0.3675,
         "exit_survival": 1.0,
         "fileline_survival": 0.6429,
-        "errline_survival": 0.7818,
+        "errline_survival": 0.3966,
         "summary_survival": 0.0698,
-        "usable_rate": 0.5882,
+        "usable_rate": 0.6941,
         "outputs_with_anchors": 85
       },
       {
@@ -320,9 +320,9 @@
         "evidence_survival": 0.1225,
         "exit_survival": 1.0,
         "fileline_survival": 0.5357,
-        "errline_survival": 0.4909,
+        "errline_survival": 0.1724,
         "summary_survival": 0.0465,
-        "usable_rate": 0.4235,
+        "usable_rate": 0.6824,
         "outputs_with_anchors": 85
       },
       {
@@ -333,9 +333,9 @@
         "evidence_survival": 0.0855,
         "exit_survival": 1.0,
         "fileline_survival": 0.4821,
-        "errline_survival": 0.4545,
+        "errline_survival": 0.1724,
         "summary_survival": 0.0,
-        "usable_rate": 0.4,
+        "usable_rate": 0.6588,
         "outputs_with_anchors": 85
       },
       {
@@ -346,9 +346,9 @@
         "evidence_survival": 0.0741,
         "exit_survival": 1.0,
         "fileline_survival": 0.3929,
-        "errline_survival": 0.4364,
+        "errline_survival": 0.1207,
         "summary_survival": 0.0,
-        "usable_rate": 0.3882,
+        "usable_rate": 0.6353,
         "outputs_with_anchors": 85
       },
       {
@@ -359,9 +359,9 @@
         "evidence_survival": 0.0484,
         "exit_survival": 1.0,
         "fileline_survival": 0.1607,
-        "errline_survival": 0.4,
+        "errline_survival": 0.0862,
         "summary_survival": 0.0,
-        "usable_rate": 0.3529,
+        "usable_rate": 0.6,
         "outputs_with_anchors": 85
       },
       {
@@ -372,9 +372,9 @@
         "evidence_survival": 0.0484,
         "exit_survival": 1.0,
         "fileline_survival": 0.125,
-        "errline_survival": 0.4,
+        "errline_survival": 0.0862,
         "summary_survival": 0.0,
-        "usable_rate": 0.3529,
+        "usable_rate": 0.6,
         "outputs_with_anchors": 85
       }
     ],
@@ -400,9 +400,9 @@
         "evidence_survival": 0.5356,
         "exit_survival": 1.0,
         "fileline_survival": 0.7857,
-        "errline_survival": 0.6727,
+        "errline_survival": 0.6379,
         "summary_survival": 0.9535,
-        "usable_rate": 0.7176,
+        "usable_rate": 0.8118,
         "outputs_with_anchors": 85
       },
       {
@@ -413,9 +413,9 @@
         "evidence_survival": 0.2764,
         "exit_survival": 1.0,
         "fileline_survival": 0.5536,
-        "errline_survival": 0.5091,
+        "errline_survival": 0.3793,
         "summary_survival": 0.6744,
-        "usable_rate": 0.4588,
+        "usable_rate": 0.6706,
         "outputs_with_anchors": 85
       },
       {
@@ -426,9 +426,9 @@
         "evidence_survival": 0.1538,
         "exit_survival": 1.0,
         "fileline_survival": 0.4107,
-        "errline_survival": 0.4,
+        "errline_survival": 0.2241,
         "summary_survival": 0.6744,
-        "usable_rate": 0.3647,
+        "usable_rate": 0.6235,
         "outputs_with_anchors": 85
       },
       {
@@ -439,9 +439,9 @@
         "evidence_survival": 0.1054,
         "exit_survival": 1.0,
         "fileline_survival": 0.1607,
-        "errline_survival": 0.3636,
+        "errline_survival": 0.2069,
         "summary_survival": 0.6744,
-        "usable_rate": 0.3294,
+        "usable_rate": 0.5882,
         "outputs_with_anchors": 85
       },
       {
@@ -452,9 +452,9 @@
         "evidence_survival": 0.0883,
         "exit_survival": 1.0,
         "fileline_survival": 0.0,
-        "errline_survival": 0.2727,
+        "errline_survival": 0.1897,
         "summary_survival": 0.6744,
-        "usable_rate": 0.3176,
+        "usable_rate": 0.5882,
         "outputs_with_anchors": 85
       },
       {
@@ -465,9 +465,9 @@
         "evidence_survival": 0.0855,
         "exit_survival": 1.0,
         "fileline_survival": 0.0,
-        "errline_survival": 0.2364,
+        "errline_survival": 0.1724,
         "summary_survival": 0.6744,
-        "usable_rate": 0.3176,
+        "usable_rate": 0.5882,
         "outputs_with_anchors": 85
       }
     ]

@@ -1,0 +1,39 @@
+{
+  "model": "qwen3.8-flash",
+  "sample": 30,
+  "rows": [
+    {
+      "budget": "100%(不压缩)",
+      "n": 30,
+      "answer_usable_strict": 0.8333,
+      "answer_usable_lenient": 0.8333,
+      "exit_ok": 1.0,
+      "errline_ok": 0.5,
+      "fileline_ok": 0.4,
+      "summary_ok": 1.0,
+      "avg_prompt_tokens": 1434.1
+    },
+    {
+      "budget": "50%",
+      "n": 30,
+      "answer_usable_strict": 0.9333,
+      "answer_usable_lenient": 0.9333,
+      "exit_ok": 1.0,
+      "errline_ok": 0.6667,
+      "fileline_ok": 1.0,
+      "summary_ok": 1.0,
+      "avg_prompt_tokens": 861.2
+    },
+    {
+      "budget": "20%",
+      "n": 30,
+      "answer_usable_strict": 0.8,
+      "answer_usable_lenient": 0.8,
+      "exit_ok": 0.92,
+      "errline_ok": 0.6667,
+      "fileline_ok": 0.8,
+      "summary_ok": 0.5,
+      "avg_prompt_tokens": 488.1
+    }
+  ]
+}

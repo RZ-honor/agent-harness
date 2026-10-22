@@ -40,7 +40,8 @@ python -m agentops.realdata.rollout_sweep <rollout.jsonl> --compare  # 用你自
 | 连续失败 3 次熔断 + 300s 冷却、三级分权 | `test_breaker_tiers.py` + `test_guard_loop.py` |
 | 压实-重取循环防护（大输出调用保留在去重检查内） | `test_compaction_coupling.py` |
 | 完全确定性（同命令两次输出一致、跨 hash seed 一致） | `test_determinism.py`（含子进程跨 PYTHONHASHSEED 比对） |
-| 真实编码会话 365 条工具输出：50% 预算证据存活 91.7%、完全可用 92.9% | `python -m agentops.realdata.rollout_sweep <rollout.jsonl> --compare`（需自备会话文件） |
+| 真实编码会话 365 条工具输出：50% 预算证据存活 91.7%、结构可用 96.5% | `python -m agentops.realdata.rollout_sweep <rollout.jsonl> --compare`（需自备会话文件） |
+| 模型在环：50% 预算答题可用 93.3%，不压缩档 83.3%–89.3% | `python -m agentops.realdata.llm_usability <rollout.jsonl>`（需自备模型 key） |
 
 ## 架构
 
@@ -80,7 +81,7 @@ agentops/opssandbox/          运维排障实验场（确定性合成故障）
 ## 已知边界（诚实声明）
 
 - 故障场景为程序化合成的确定性数据（`scenario.py`，稳定哈希保证跨进程一致），非真实生产日志；结论刻画的是该场景分布下机制的行为边界。
-- **压缩器已做域自适应，并用真实数据验证**：`profile='coding'` 在真实编码 Agent 会话（365 条工具输出）上，50% 预算证据存活 91.7%、下一跳完全可用 92.9%（优于头尾截断的 53.6% / 71.8%）；`profile='ops'` 保持合成沙箱全部数字不变。详见 [VERIFICATION.md](VERIFICATION.md) 与 [docs/上下文压缩方案调研.md](docs/上下文压缩方案调研.md)。
+- **压缩器已做域自适应，并用真实数据验证**：`profile='coding'` 在真实编码 Agent 会话（365 条工具输出）上，50% 预算证据存活 91.7%、结构可用 96.5%，模型在环答题可用 93.3%（不压缩档 83.3%–89.3%），均优于头尾截断的 53.6% / 71.8%；`profile='ops'` 保持合成沙箱全部数字不变。详见 [VERIFICATION.md](VERIFICATION.md) 与 [docs/上下文压缩方案调研.md](docs/上下文压缩方案调研.md)。
 - 脚本策略代理代表"称职模型"行为上界；接入真实 LLM 时曲线形状预期保持，绝对数值会变。
 - 根因判定稳定性仅在**工作点及以上档位**成立（50%/20%/10% 档根因未命中 0/20）；跌破 10% 后根因同样退化（5% 档 4/20 未命中）——这本身就是"悬崖"的一部分。
 - "重复查询 80→25" 为查询计划重放口径（每案例告警+根因各查两遍的朴素计划 vs 记忆排除后），真实回路总调用为 71 次（见 `metrics` 两节分别标注）。
