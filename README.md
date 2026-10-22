@@ -10,7 +10,7 @@ An Agent runtime harness with execution guardrails (tiered tool permissions, con
 
 ```bash
 pip install pytest
-git clone <repo-url> && cd agent-harness
+git clone https://github.com/RZ-honor/agent-harness.git && cd agent-harness
 
 pytest -q                                   # 83 项测试，全绿即环境正确（含跨 PYTHONHASHSEED 确定性回归）
 python -m agentops.opssandbox.sweep --guard --save   # 压缩率-成功率曲线（护栏回路开启，秒级完成）
