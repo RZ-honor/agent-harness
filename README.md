@@ -23,6 +23,8 @@ python -m agentops.opssandbox.debug_one ops03   # 回放单案例完整 trace（
 
 ## 简历数字 ↔ 复现命令对照
 
+> 每个指标的实测值、验证方式与日期固化在 [VERIFICATION.md](VERIFICATION.md)（作者运行 + 独立审核双验，commit `9ac4be2`）；验证不通过的旧声明已撤回或降格，记录在该文末表。
+
 | 量化结论 | 复现入口 |
 |---|---|
 | 20 例多步排障任务，护栏回路端到端通过 20/20 | `sweep --guard` 基线档 / `guard_e2e` Part 1 |
